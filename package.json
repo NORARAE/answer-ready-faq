@@ -2,7 +2,7 @@
 	"name": "answer-ready-faq",
 	"version": "1.0.0",
 	"description": "An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD for search engines and AI answer engines.",
-	"author": "Nora Genetti",
+	"author": "Nora G. (PlayPlayCode)",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
 		"wordpress",

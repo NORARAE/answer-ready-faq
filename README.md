@@ -69,6 +69,14 @@ build/                      Compiled output (generated; not committed)
 - Optional "single item open at a time" progressive enhancement via a small `viewScript` using the `name` attribute on `<details>`
 - `HowTo` sibling block sharing the same architecture
 
+## Author
+
+Built by **Nora G.** ([PlayPlayCode](https://playplaycode.myportfolio.com/))
+
+- Portfolio: [playplaycode.myportfolio.com](https://playplaycode.myportfolio.com/)
+- LinkedIn: [linkedin.com/in/ngenetti](https://www.linkedin.com/in/ngenetti/)
+- GitHub: [github.com/NORARAE](https://github.com/NORARAE)
+
 ## License
 
 GPL-2.0-or-later.

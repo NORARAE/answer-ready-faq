@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:       Answer-Ready FAQ Block
- * Plugin URI:        https://github.com/ngenetti/answer-ready-faq
+ * Plugin URI:        https://github.com/NORARAE/answer-ready-faq
  * Description:       An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD, making your answers machine-readable for search engines and AI answer engines.
  * Version:           1.0.0
  * Requires at least: 6.5
  * Requires PHP:      8.0
- * Author:            Nora Genetti
- * Author URI:        https://www.linkedin.com/in/ngenetti/
+ * Author:            Nora G. (PlayPlayCode)
+ * Author URI:        https://playplaycode.myportfolio.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       answer-ready-faq
