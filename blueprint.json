@@ -1,0 +1,31 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/faq-demo/",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "features": {
+    "networking": true
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin"
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://github-proxy.com/proxy/?repo=NORARAE/answer-ready-faq&release=v1.0.0&asset=answer-ready-faq.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; wp_insert_post(array('post_title' => 'Answer-Ready FAQ - Live Demo', 'post_name' => 'faq-demo', 'post_type' => 'page', 'post_status' => 'publish', 'post_content' => '<!-- wp:answer-ready/faq {\"heading\": \"AI Search Visibility FAQ\", \"faqs\": [{\"question\": \"What is answer engine optimization (AEO)?\", \"answer\": \"AEO is the practice of structuring content so AI systems like ChatGPT, Perplexity, and Google AI Overviews can find, understand, and cite it when answering user questions. Where traditional SEO optimizes for ranked links, AEO optimizes for being the answer itself.\"}, {\"question\": \"How is AEO different from traditional SEO?\", \"answer\": \"SEO targets keyword rankings and click-through from results pages. AEO targets citation and inclusion in AI-generated answers, which rewards clear question-and-answer formatting, factual precision, structured data, and content that machines can parse without ambiguity. Strong AEO builds on solid technical SEO rather than replacing it.\"}, {\"question\": \"Does FAQ schema still matter for AI search?\", \"answer\": \"Yes. While Google has limited FAQ rich results display, FAQPage structured data still helps machines map questions to answers unambiguously. Well-structured content is consistently easier for LLM-based engines to extract and cite accurately.\"}, {\"question\": \"How do I know if AI engines are citing my content?\", \"answer\": \"Monitor referral traffic from AI platforms in GA4, check server logs for AI crawler activity, and test your key questions directly in ChatGPT, Perplexity, and Gemini. Dedicated AI visibility platforms can track brand mentions and citations across engines at scale.\"}, {\"question\": \"How often should FAQ content be reviewed?\", \"answer\": \"Quarterly at minimum, and immediately when the underlying facts change. Because this block generates its schema from the visible content on every page load, updating the answer automatically updates the structured data — they can never drift apart.\"}], \"emitSchema\": true} /-->'));"
+    }
+  ]
+}
