@@ -1,10 +1,26 @@
 # Answer-Ready FAQ Block
 
+**An accessible WordPress FAQ block that writes its own SEO structured data — content and schema can never drift apart.**
+
+| | |
+|---|---|
+| ⚛️ **React editor UI** | Add, reorder, and remove Q&A pairs with undo/redo |
+| ♿ **Accessible by default** | Native disclosure elements, full keyboard support, zero front-end JS |
+| 🤖 **AI-search ready** | Auto-generated schema.org FAQPage JSON-LD on every render |
+| 🔒 **Escaped twice** | Editor constraints + server-side `wp_kses()` allowlist |
+| 🎨 **Theme-agnostic** | Inherits any theme's colors and type, dark mode included |
+
 A WordPress block that treats an FAQ as what it really is: **content for two audiences at once** — the human reading the page, and the search engines and AI answer engines deciding whether to surface it.
 
 Editors manage question/answer pairs in a clean repeater UI. The block renders an accessible, dependency-free accordion on the front end **and** automatically emits a [schema.org `FAQPage`](https://schema.org/FAQPage) JSON-LD graph generated from the same content — so the structured data can never drift out of sync with what visitors see.
 
 Built with the standard WordPress toolchain (`@wordpress/scripts`), block API v3, and a dynamic render callback in modern, namespaced, strictly-typed PHP.
+
+## ▶️ Try it live
+
+**[One-click demo in WordPress Playground →](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/NORARAE/answer-ready-faq/main/blueprint.json)**
+
+*A temporary WordPress site spins up in your browser with the plugin installed and a demo FAQ page already published. Nothing to install. ~15s first load.*
 
 ## Why this block exists
 
