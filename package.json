@@ -1,0 +1,35 @@
+{
+	"name": "answer-ready-faq",
+	"version": "1.0.0",
+	"description": "An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD for search engines and AI answer engines.",
+	"author": "Nora Genetti",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"block",
+		"faq",
+		"schema",
+		"structured-data",
+		"accessibility"
+	],
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php",
+		"start": "wp-scripts start --webpack-copy-php",
+		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"files": [
+		"answer-ready-faq.php",
+		"build",
+		"readme.txt",
+		"LICENSE"
+	],
+	"devDependencies": {
+		"@wordpress/scripts": "^30.0.0"
+	},
+	"dependencies": {
+		"@wordpress/icons": "^15.1.0"
+	}
+}

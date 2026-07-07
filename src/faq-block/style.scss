@@ -1,0 +1,77 @@
+/**
+ * Front-end styles.
+ *
+ * Deliberately restrained: the block inherits the theme's typography
+ * and color system and only asserts structure (spacing, dividers, the
+ * disclosure marker). currentColor and em units keep it legible in any
+ * theme, dark mode included.
+ */
+.answer-ready-faq {
+	&__heading {
+		margin-bottom: 0.75em;
+	}
+
+	&__item {
+		border-bottom: 1px solid;
+		border-color: color-mix( in srgb, currentColor 20%, transparent );
+
+		&:first-of-type {
+			border-top: 1px solid;
+			border-color: color-mix( in srgb, currentColor 20%, transparent );
+		}
+	}
+
+	&__question {
+		cursor: pointer;
+		font-weight: 600;
+		padding: 0.875em 0.25em;
+		list-style-position: outside;
+
+		// Visible focus for keyboard users — never removed, only styled.
+		&:focus-visible {
+			outline: 2px solid currentColor;
+			outline-offset: 2px;
+			border-radius: 2px;
+		}
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	&__answer {
+		padding: 0 0.25em 1em 0.25em;
+
+		> :last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	// Rotate the native disclosure marker instead of replacing it —
+	// keeps platform semantics while smoothing the interaction.
+	&__item > summary::marker {
+		content: "";
+	}
+
+	&__item > summary::before {
+		content: "";
+		display: inline-block;
+		width: 0.5em;
+		height: 0.5em;
+		margin-right: 0.625em;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: rotate( -45deg );
+		transition: transform 0.15s ease;
+	}
+
+	&__item[open] > summary::before {
+		transform: rotate( 45deg );
+	}
+
+	@media ( prefers-reduced-motion: reduce ) {
+		&__item > summary::before {
+			transition: none;
+		}
+	}
+}

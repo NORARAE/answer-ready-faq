@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "answer-ready/faq",
+	"version": "1.0.0",
+	"title": "Answer-Ready FAQ",
+	"category": "text",
+	"icon": "editor-help",
+	"description": "An accessible FAQ accordion that automatically outputs schema.org FAQPage structured data for search engines and AI answer engines.",
+	"keywords": [ "faq", "schema", "accordion", "seo", "structured data" ],
+	"textdomain": "answer-ready-faq",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"faqs": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object"
+			}
+		},
+		"emitSchema": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,38 @@
+/**
+ * Editor-only styles for the Q&A repeater.
+ */
+.answer-ready-faq {
+	&__empty {
+		opacity: 0.7;
+		font-style: italic;
+	}
+
+	&__editor-item {
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 12px 16px;
+		margin-bottom: 12px;
+		background: #fff;
+	}
+
+	&__editor-index {
+		font-size: 11px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #757575;
+	}
+
+	&__editor-question {
+		font-weight: 600;
+		margin: 8px 0 4px;
+	}
+
+	&__editor-answer {
+		margin: 0;
+	}
+
+	&__add {
+		margin-top: 4px;
+	}
+}
