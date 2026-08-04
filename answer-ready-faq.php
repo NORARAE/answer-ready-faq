@@ -6,8 +6,8 @@
  * Version:           1.0.0
  * Requires at least: 6.5
  * Requires PHP:      8.0
- * Author:            Nora G. (PlayPlayCode)
- * Author URI:        https://playplaycode.myportfolio.com/
+ * Author:            Nora G. (PlayPlayAI)
+ * Author URI:        https://playplayai.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       answer-ready-faq
