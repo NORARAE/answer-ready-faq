@@ -1,0 +1,16 @@
+{
+	"name": "answer-ready-faq-headless-nextjs",
+	"version": "1.2.0",
+	"private": true,
+	"description": "Minimal Next.js App Router example that renders a WordPress FAQ from the Answer-Ready FAQ REST endpoint.",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start"
+	},
+	"dependencies": {
+		"next": "^15.0.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	}
+}

@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Answer-Ready FAQ Block
  * Plugin URI:        https://github.com/NORARAE/answer-ready-faq
- * Description:       An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD, making your answers machine-readable for search engines and AI answer engines.
- * Version:           1.1.0
+ * Description:       An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD, making your answers machine-readable for search engines, AI answer engines, and any headless front end via a read-only REST endpoint.
+ * Version:           1.2.0
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            PlayPlayAI
@@ -24,7 +24,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const PLUGIN_VERSION = '1.1.0';
+const PLUGIN_VERSION = '1.2.0';
+
+/**
+ * The data layer both the renderer and the REST endpoint read from, and the
+ * endpoint itself. Loaded at file scope rather than on a hook so that
+ * render.php can rely on these functions existing whenever a block renders.
+ */
+require_once __DIR__ . '/includes/faq-data.php';
+require_once __DIR__ . '/includes/rest.php';
 
 /**
  * Register the block using the metadata loaded from block.json.

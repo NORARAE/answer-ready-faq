@@ -6,3 +6,12 @@
 
 node_modules/
 .DS_Store
+
+# Composer (dev only — the plugin ships no vendor/)
+/vendor/
+/.phpunit.cache/
+
+# Next.js example
+examples/headless-nextjs/node_modules/
+examples/headless-nextjs/.next/
+examples/headless-nextjs/.env.local
