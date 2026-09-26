@@ -26,8 +26,9 @@ export default async function Home() {
 				a WordPress theme or a WordPress block.
 			</p>
 
-			{ /* Native disclosure elements, so this example ships no client
-			     JavaScript at all: it is a server component start to finish. */ }
+			{ /* Native disclosure elements, so nothing on this page needs
+			     React in the browser to work. Every file here is a server
+			     component; the only client JavaScript is Next's own runtime. */ }
 			<div className="faqs">
 				{ data.faqs.map( ( faq, index ) => (
 					<details key={ index }>

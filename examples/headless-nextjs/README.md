@@ -4,7 +4,7 @@ A WordPress FAQ, rendered by Next.js. WordPress stores the answers; this app ask
 
 ![The example running against the demo endpoint](./screenshot.jpg)
 
-It is about a hundred lines in total, and it ships **no client JavaScript** — the accordion uses native `<details>`, so every file here is a server component.
+It is about a hundred lines in total. Every file here is a server component: the accordion is native `<details>`, so none of the page's behaviour depends on React running in the browser. (Next.js still loads its own runtime chunks — that is the framework, not this example.)
 
 ## Run it
 
