@@ -1,6 +1,6 @@
 {
 	"name": "answer-ready-faq",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD for search engines and AI answer engines.",
 	"author": "PlayPlayAI",
 	"license": "GPL-2.0-or-later",

@@ -28,7 +28,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://github-proxy.com/proxy/?repo=NORARAE/answer-ready-faq&release=v1.2.0&asset=answer-ready-faq.zip"
+        "url": "https://github-proxy.com/proxy/?repo=NORARAE/answer-ready-faq&release=v1.2.1&asset=answer-ready-faq.zip"
       },
       "options": {
         "activate": true
