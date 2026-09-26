@@ -22,6 +22,8 @@ Built with the standard WordPress toolchain (`@wordpress/scripts`), block API v3
 
 *A temporary WordPress site spins up in your browser with the plugin installed and a demo FAQ page already published. Nothing to install. ~15s first load.*
 
+The demo page also lets you open the block in the real editor, look at the plugin on the Plugins screen, and expand a panel showing the `FAQPage` JSON-LD **that page is publishing at that moment** — read back out of the rendered HTML, not a copy pasted into a docs example.
+
 ## Why this block exists
 
 Most FAQ schema implementations fail in one of two ways:
@@ -77,6 +79,23 @@ src/faq-block/
   style.scss                Front-end structure-only styles
   editor.scss               Editor-only repeater styles
 build/                      Compiled output (generated; not committed)
+blueprint.json              WordPress Playground demo definition
+demo/mu-plugins/
+  playplayai-demo-skin.php  Demo-only presentation layer (see below)
+tools/build-blueprint.mjs   Inlines the demo skin into blueprint.json
+```
+
+## The Playground demo
+
+Everything the demo adds lives in one must-use plugin, `demo/mu-plugins/playplayai-demo-skin.php`, which `blueprint.json` writes into `wp-content/mu-plugins` when the site boots. It supplies the dark navy and gold skin, the welcome strip, the schema panel, an admin pointer on the Plugins menu, and the footer.
+
+It is strictly a presentation layer. It adds no filters to the block's attributes, changes none of its markup, and generates no structured data of its own — the schema panel *observes* `render_block`, lifts the JSON-LD the block already emitted, and pretty-prints it. Delete the file and the block behaves exactly as it does on any other site.
+
+Because a `writeFile` step has to carry the PHP inside a JSON string, the file is kept as a real, lintable file and copied into the blueprint by a script:
+
+```bash
+npm run build:blueprint   # inline demo/mu-plugins/*.php into blueprint.json
+npm run check:blueprint   # fail if blueprint.json is out of date
 ```
 
 ## Roadmap
@@ -87,10 +106,11 @@ build/                      Compiled output (generated; not committed)
 
 ## Author
 
-Built by **Nora G.** ([PlayPlayAI](https://playplayai.com/))
+Built by **PlayPlayAI**.
 
-- Portfolio: [playplayai.com](https://playplayai.com/)
-- LinkedIn: [linkedin.com/in/ngenetti](https://www.linkedin.com/in/ngenetti/)
+- Site: [playplayai.com](https://playplayai.com)
+- Bloom: [bloom.playplayai.com](https://bloom.playplayai.com)
+- LinkedIn: [linkedin.com/in/ngenetti](https://www.linkedin.com/in/ngenetti)
 - GitHub: [github.com/NORARAE](https://github.com/NORARAE)
 
 ## License

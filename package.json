@@ -1,8 +1,8 @@
 {
 	"name": "answer-ready-faq",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD for search engines and AI answer engines.",
-	"author": "Nora G. (PlayPlayAI)",
+	"author": "PlayPlayAI",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
 		"wordpress",
@@ -15,6 +15,8 @@
 	],
 	"scripts": {
 		"build": "wp-scripts build --webpack-copy-php",
+		"build:blueprint": "node tools/build-blueprint.mjs",
+		"check:blueprint": "node tools/build-blueprint.mjs --check",
 		"start": "wp-scripts start --webpack-copy-php",
 		"lint:js": "wp-scripts lint-js",
 		"lint:css": "wp-scripts lint-style",
