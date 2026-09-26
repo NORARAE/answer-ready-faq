@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  plugin:
+    name: Plugin tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # PHPUnit 10 needs PHP 8.1+, so the suite cannot run on the 8.0 floor
+      # the plugin header declares. 8.2 matches the Playground demo.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Lint every PHP file
+        run: find . -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Run tests
+        run: composer test
+
+  example:
+    name: Headless example builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: examples/headless-nextjs/package-lock.json
+
+      - name: Install dependencies
+        working-directory: examples/headless-nextjs
+        run: npm ci
+
+      # Builds the app against test/fixture.json — a saved copy of a real
+      # endpoint response — then serves it and asserts on the rendered HTML.
+      # `.next` is deliberately not cached: Next reuses fetch responses
+      # between builds, and a warm cache can render content the fixture no
+      # longer contains, which would hide exactly the breakage this catches.
+      - name: Build and check the rendered page
+        working-directory: examples/headless-nextjs
+        run: npm run test:smoke
