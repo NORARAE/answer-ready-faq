@@ -1,0 +1,75 @@
+{
+	"postId": 4,
+	"title": "See it working",
+	"url": "https://example.com/faq-demo/",
+	"modified": "2026-09-26T18:37:46+00:00",
+	"count": 5,
+	"faqs": [
+		{
+			"question": "What is answer engine optimization (AEO)?",
+			"answer": "AEO is the practice of structuring content so AI systems like ChatGPT, Perplexity, and Google AI Overviews can find, understand, and cite it when answering user questions. Where traditional SEO optimizes for ranked links, AEO optimizes for being the answer itself."
+		},
+		{
+			"question": "How is AEO different from traditional SEO?",
+			"answer": "SEO targets keyword rankings and click-through from results pages. AEO targets citation and inclusion in AI-generated answers, which rewards clear question-and-answer formatting, factual precision, structured data, and content that machines can parse without ambiguity. Strong AEO builds on solid technical SEO rather than replacing it."
+		},
+		{
+			"question": "Does FAQ schema still matter for AI search?",
+			"answer": "Yes. While Google has limited FAQ rich results display, FAQPage structured data still helps machines map questions to answers unambiguously. Well-structured content is consistently easier for LLM-based engines to extract and cite accurately."
+		},
+		{
+			"question": "How do I know if AI engines are citing my content?",
+			"answer": "Monitor referral traffic from AI platforms in GA4, check server logs for AI crawler activity, and test your key questions directly in ChatGPT, Perplexity, and Gemini. Dedicated AI visibility platforms can track brand mentions and citations across engines at scale."
+		},
+		{
+			"question": "How often should FAQ content be reviewed?",
+			"answer": "Quarterly at minimum, and immediately when the underlying facts change. Because this block generates its schema from the visible content on every page load, updating the answer automatically updates the structured data — they can never drift apart."
+		}
+	],
+	"schema": {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What is answer engine optimization (AEO)?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "AEO is the practice of structuring content so AI systems like ChatGPT, Perplexity, and Google AI Overviews can find, understand, and cite it when answering user questions. Where traditional SEO optimizes for ranked links, AEO optimizes for being the answer itself."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How is AEO different from traditional SEO?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "SEO targets keyword rankings and click-through from results pages. AEO targets citation and inclusion in AI-generated answers, which rewards clear question-and-answer formatting, factual precision, structured data, and content that machines can parse without ambiguity. Strong AEO builds on solid technical SEO rather than replacing it."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Does FAQ schema still matter for AI search?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. While Google has limited FAQ rich results display, FAQPage structured data still helps machines map questions to answers unambiguously. Well-structured content is consistently easier for LLM-based engines to extract and cite accurately."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I know if AI engines are citing my content?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Monitor referral traffic from AI platforms in GA4, check server logs for AI crawler activity, and test your key questions directly in ChatGPT, Perplexity, and Gemini. Dedicated AI visibility platforms can track brand mentions and citations across engines at scale."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How often should FAQ content be reviewed?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Quarterly at minimum, and immediately when the underlying facts change. Because this block generates its schema from the visible content on every page load, updating the answer automatically updates the structured data — they can never drift apart."
+				}
+			}
+		]
+	}
+}

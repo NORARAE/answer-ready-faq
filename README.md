@@ -1,5 +1,7 @@
 # Answer-Ready FAQ Block
 
+[![CI](https://github.com/NORARAE/answer-ready-faq/actions/workflows/ci.yml/badge.svg)](https://github.com/NORARAE/answer-ready-faq/actions/workflows/ci.yml)
+
 **An accessible WordPress FAQ block that writes its own SEO structured data — content and schema can never drift apart.**
 
 | | |
