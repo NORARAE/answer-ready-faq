@@ -120,6 +120,16 @@ html {
 	background-color: var(--ppai-navy);
 }
 
+/* A block theme does not necessarily set a universal border-box, and the
+   UA stylesheet gives <button> border-box while leaving <a> on
+   content-box. That splits `width: 100%` two ways: at 390px the stacked
+   link-buttons came out 42px wider than the real <button> beside them.
+   Own the box model for everything this file draws. */
+body.ppai-demo [class^="ppai-"],
+body.ppai-demo [class*=" ppai-"] {
+	box-sizing: border-box;
+}
+
 body.ppai-demo {
 	background-color: var(--ppai-navy) !important;
 	color: var(--ppai-ink) !important;
