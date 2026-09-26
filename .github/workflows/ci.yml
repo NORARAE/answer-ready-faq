@@ -20,8 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # PHPUnit 10 needs PHP 8.1+, so the suite cannot run on the 8.0 floor
-      # the plugin header declares. 8.2 matches the Playground demo.
+      # 8.2 matches the Playground demo. The plugin's declared floor is 8.1,
+      # which is also PHPUnit 10's minimum, so the suite can run on it.
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'

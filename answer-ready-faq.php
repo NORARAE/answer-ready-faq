@@ -5,7 +5,7 @@
  * Description:       An accessible FAQ accordion block that automatically outputs schema.org FAQPage JSON-LD, making your answers machine-readable for search engines, AI answer engines, and any headless front end via a read-only REST endpoint.
  * Version:           1.2.0
  * Requires at least: 6.5
- * Requires PHP:      8.0
+ * Requires PHP:      8.1
  * Author:            PlayPlayAI
  * Author URI:        https://playplayai.com
  * License:           GPL-2.0-or-later

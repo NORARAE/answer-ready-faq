@@ -110,7 +110,7 @@ composer test
 
 The data layer leans on only `wp_strip_all_tags()` and `wp_kses()`, both stubbed in `tests/bootstrap.php`, which keeps the suite fast enough to run on every save. It covers the normaliser, the schema shape, the escaping contract, and the single-source guarantee above.
 
-Requires WordPress 6.5+ and PHP 8.0+.
+Requires WordPress 6.5+ and PHP 8.1+.
 
 ## Structure
 
