@@ -353,13 +353,17 @@ body.ppai-demo .ppai-btn:active {
 
 /* The headless page --------------------------------------------------- */
 
+/* A direct child of the content area, so the theme is already sizing and
+   centring it. Keep `auto` in the margin shorthand — `margin: 0 0 2rem`
+   silently cancels the theme's margin-inline and drops the lede out of the
+   column the cards below sit in — and set no max-width of our own, so the
+   measure stays exactly the column width. */
 .ppai-hl__lede {
 	color: #ffffff !important;
 	font-size: clamp(1.0625rem, 3.2vw, 1.25rem);
 	font-weight: 500;
 	line-height: 1.55;
-	margin: 0 0 2rem !important;
-	max-width: 52ch;
+	margin: 0 auto 2rem !important;
 }
 
 .ppai-hl__count,
