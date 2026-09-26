@@ -124,9 +124,11 @@ html {
    UA stylesheet gives <button> border-box while leaving <a> on
    content-box. That splits `width: 100%` two ways: at 390px the stacked
    link-buttons came out 42px wider than the real <button> beside them.
-   Own the box model for everything this file draws. */
-body.ppai-demo [class^="ppai-"],
-body.ppai-demo [class*=" ppai-"] {
+   Scoped to the buttons on purpose — they are the only thing here with an
+   explicit width. Applying it to the cards instead made them 74px
+   narrower than the FAQ block's own card, which the theme sizes the same
+   way, so the two no longer lined up. */
+body.ppai-demo .ppai-btn {
 	box-sizing: border-box;
 }
 
