@@ -268,7 +268,10 @@ body.ppai-demo .answer-ready-faq__answer li {
 	gap: 0.75rem;
 }
 
-.ppai-btn {
+/* Scoped to body.ppai-demo so these out-specify the blanket link colour
+   above: a solid gold button needs dark text, and a bare `.ppai-btn--primary`
+   rule loses to `body.ppai-demo a` even with !important on both. */
+body.ppai-demo .ppai-btn {
 	appearance: none;
 	border: 1px solid var(--ppai-gold);
 	border-radius: 999px;
@@ -284,37 +287,37 @@ body.ppai-demo .answer-ready-faq__answer li {
 	transition: transform 0.12s ease, background-color 0.12s ease;
 }
 
-.ppai-btn--primary {
+body.ppai-demo .ppai-btn--primary {
 	background-color: var(--ppai-gold);
 	color: #0b1526 !important;
 }
 
-.ppai-btn--primary:hover,
-.ppai-btn--primary:focus-visible {
+body.ppai-demo .ppai-btn--primary:hover,
+body.ppai-demo .ppai-btn--primary:focus-visible {
 	background-color: var(--ppai-gold-bright);
 	color: #0b1526 !important;
 }
 
-.ppai-btn--ghost {
+body.ppai-demo .ppai-btn--ghost {
 	background-color: transparent;
 	color: var(--ppai-gold) !important;
 }
 
-.ppai-btn--ghost:hover,
-.ppai-btn--ghost:focus-visible {
+body.ppai-demo .ppai-btn--ghost:hover,
+body.ppai-demo .ppai-btn--ghost:focus-visible {
 	background-color: rgba(233, 185, 73, 0.14);
 	color: var(--ppai-gold-bright) !important;
 }
 
-.ppai-btn:active {
+body.ppai-demo .ppai-btn:active {
 	transform: translateY(1px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.ppai-btn {
+	body.ppai-demo .ppai-btn {
 		transition: none;
 	}
-	.ppai-btn:active {
+	body.ppai-demo .ppai-btn:active {
 		transform: none;
 	}
 }
@@ -403,7 +406,7 @@ body.ppai-demo .answer-ready-faq__answer li {
 		flex-direction: column;
 	}
 
-	.ppai-btn {
+	body.ppai-demo .ppai-btn {
 		display: block;
 		width: 100%;
 	}
