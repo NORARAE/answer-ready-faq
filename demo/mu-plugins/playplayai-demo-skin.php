@@ -112,6 +112,10 @@ function skin_css(): string {
 	--ppai-ink: #f2f6fd;
 	--ppai-ink-muted: #b7c6de;
 	--ppai-line: rgba(233, 185, 73, 0.24);
+	/* Matches the FAQ block's own card padding. The theme sizes each
+	   top-level child to the same content width and the padding sits
+	   outside it, so equal padding is what makes the card edges line up. */
+	--ppai-card-pad: clamp(1.25rem, 4vw, 2.25rem);
 	--ppai-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	--ppai-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
@@ -218,7 +222,7 @@ body.ppai-demo .answer-ready-faq {
 	background-color: var(--ppai-navy-raised);
 	border: 1px solid var(--ppai-line);
 	border-radius: 16px;
-	padding: clamp(1.25rem, 4vw, 2.25rem);
+	padding: var(--ppai-card-pad);
 	margin-block: 2.5rem;
 	box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.9);
 }
@@ -252,7 +256,7 @@ body.ppai-demo .answer-ready-faq__answer li {
 	background: linear-gradient(135deg, #14264a 0%, #0d1a30 100%);
 	border: 1px solid var(--ppai-line);
 	border-radius: 16px;
-	padding: clamp(1.375rem, 4.5vw, 2rem);
+	padding: var(--ppai-card-pad);
 	margin-block: 0 2.5rem;
 }
 
@@ -341,7 +345,7 @@ body.ppai-demo .ppai-btn:active {
 	border: 1px solid var(--ppai-line);
 	border-radius: 16px;
 	margin-block: 2.5rem;
-	padding: clamp(1.125rem, 4vw, 1.75rem);
+	padding: var(--ppai-card-pad);
 }
 
 .ppai-schema > summary {
