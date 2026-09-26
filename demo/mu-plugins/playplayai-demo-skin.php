@@ -365,16 +365,39 @@ body.ppai-demo .ppai-btn:active {
 	overflow: auto;
 	padding: 1rem 1.125rem;
 	tab-size: 2;
-	white-space: pre;
+	/* pre-wrap, not pre: the point of this panel is that someone can read
+	   the schema, and a horizontal scrollbar hides the answer text — most
+	   of all at 390px. Indentation still comes through. */
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
 }
 
 /* Demo footer --------------------------------------------------------- */
+
+/* A block theme's default footer pattern ships a nav block pointing at
+   pages this one-page demo doesn't have — eight links that all 404. Hide
+   it and let the demo footer below carry the site identity instead. */
+body.ppai-demo footer.wp-block-template-part {
+	display: none !important;
+}
 
 .ppai-footer {
 	border-top: 1px solid var(--ppai-line);
 	margin-top: 3rem;
 	padding: 1.75rem 1.25rem 2.5rem;
 	text-align: center;
+}
+
+.ppai-footer__brand {
+	color: #ffffff !important;
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 1rem !important;
+}
+
+.ppai-footer__brand span {
+	color: var(--ppai-gold) !important;
+	font-weight: 500;
 }
 
 .ppai-footer__links {
@@ -416,7 +439,19 @@ body.ppai-demo .ppai-btn:active {
 		padding: 0.875rem;
 	}
 
-	.ppai-footer__links {
+	.ppai-footer__brand {
+	color: #ffffff !important;
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 1rem !important;
+}
+
+.ppai-footer__brand span {
+	color: var(--ppai-gold) !important;
+	font-weight: 500;
+}
+
+.ppai-footer__links {
 		flex-direction: column;
 		gap: 0.625rem;
 	}
@@ -588,10 +623,19 @@ function render_footer(): void {
 		);
 	}
 
+	// Read back from the site options the blueprint set, so the footer says
+	// whatever the site says rather than keeping its own second copy.
+	$brand = sprintf(
+		'%s <span>%s</span>',
+		esc_html( get_bloginfo( 'name' ) ),
+		esc_html( get_bloginfo( 'description' ) )
+	);
+
 	printf(
-		'<footer class="ppai-footer"><div class="ppai-footer__links">%s</div><p class="ppai-footer__note">%s</p></footer>',
+		'<footer class="ppai-footer"><p class="ppai-footer__brand">%s</p><div class="ppai-footer__links">%s</div><p class="ppai-footer__note">%s</p></footer>',
+		$brand, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above.
 		$markup, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above.
-		esc_html__( 'Built by PlayPlayAI. This demo site is temporary — close the tab and it is gone.', 'answer-ready-faq' )
+		esc_html__( 'This demo site is temporary — close the tab and it is gone.', 'answer-ready-faq' )
 	);
 }
 add_action( 'wp_footer', __NAMESPACE__ . '\render_footer', 20 );
