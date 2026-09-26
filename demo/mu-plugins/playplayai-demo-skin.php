@@ -30,7 +30,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const DEMO_PAGE_SLUG = 'faq-demo';
+const DEMO_PAGE_SLUG     = 'faq-demo';
+const HEADLESS_PAGE_SLUG = 'see-it-headless';
 const POINTER_ID     = 'ppai_answer_ready_plugins';
 const SITE_URL       = 'https://playplayai.com';
 const BLOOM_URL      = 'https://bloom.playplayai.com';
@@ -65,6 +66,10 @@ function body_class( array $classes ): array {
 
 	if ( is_page( DEMO_PAGE_SLUG ) ) {
 		$classes[] = 'ppai-demo-page';
+	}
+
+	if ( is_page( HEADLESS_PAGE_SLUG ) ) {
+		$classes[] = 'ppai-headless-page';
 	}
 
 	return $classes;
@@ -338,6 +343,144 @@ body.ppai-demo .ppai-btn:active {
 	}
 }
 
+.ppai-welcome__note {
+	color: var(--ppai-ink-muted) !important;
+	font-size: 0.9375rem;
+	line-height: 1.6;
+	margin: 1.125rem 0 0 !important;
+	max-width: 56ch;
+}
+
+/* The headless page --------------------------------------------------- */
+
+/* A direct child of the content area, so the theme is already sizing and
+   centring it. Keep `auto` in the margin shorthand — `margin: 0 0 2rem`
+   silently cancels the theme's margin-inline and drops the lede out of the
+   column the cards below sit in — and set no max-width of our own, so the
+   measure stays exactly the column width. */
+.ppai-hl__lede {
+	color: #ffffff !important;
+	font-size: clamp(1.0625rem, 3.2vw, 1.25rem);
+	font-weight: 500;
+	line-height: 1.55;
+	margin: 0 auto 2rem !important;
+}
+
+.ppai-hl__count,
+.ppai-hl__status {
+	color: var(--ppai-gold) !important;
+	font-size: 0.9375rem;
+	margin: 0 0 1.25rem !important;
+}
+
+.ppai-hl__status--error {
+	color: #ffb4a8 !important;
+}
+
+.ppai-hl__list {
+	background-color: var(--ppai-navy-raised);
+	border: 1px solid var(--ppai-line);
+	border-radius: 16px;
+	padding: var(--ppai-card-pad);
+}
+
+.ppai-hl__item + .ppai-hl__item {
+	border-top: 1px solid var(--ppai-line);
+}
+
+/* A real button, not a <details>: on this page the front end owns the
+   interaction, and that is the difference the page exists to show. */
+body.ppai-demo .ppai-hl__question {
+	appearance: none;
+	background: none;
+	border: 0;
+	color: var(--ppai-gold-bright) !important;
+	cursor: pointer;
+	display: flex;
+	align-items: baseline;
+	gap: 0.625em;
+	font-family: inherit;
+	font-size: 1.0625rem;
+	font-weight: 600;
+	line-height: 1.5;
+	padding: 1.125em 0.25em;
+	text-align: left;
+	width: 100%;
+}
+
+body.ppai-demo .ppai-hl__question:hover {
+	color: #ffffff !important;
+}
+
+body.ppai-demo .ppai-hl__question:focus-visible {
+	border-radius: 4px;
+	outline: 2px solid var(--ppai-gold-bright);
+	outline-offset: -2px;
+}
+
+.ppai-hl__marker {
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	display: inline-block;
+	flex: 0 0 auto;
+	height: 0.5em;
+	transform: rotate(-45deg);
+	transition: transform 0.15s ease;
+	width: 0.5em;
+}
+
+.ppai-hl__question[aria-expanded="true"] .ppai-hl__marker {
+	transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ppai-hl__marker {
+		transition: none;
+	}
+}
+
+.ppai-hl__answer {
+	color: var(--ppai-ink-muted) !important;
+	max-width: 68ch;
+	padding: 0 0.25em 1.5em;
+}
+
+.ppai-hl__answer p {
+	color: var(--ppai-ink-muted) !important;
+	margin-top: 0;
+}
+
+.ppai-hl__data {
+	background-color: var(--ppai-navy-raised);
+	border: 1px solid var(--ppai-line);
+	border-radius: 16px;
+	margin-block: 2.5rem;
+	padding: var(--ppai-card-pad);
+}
+
+.ppai-hl__data > summary {
+	color: var(--ppai-gold-bright) !important;
+	cursor: pointer;
+	font-size: 1.0625rem;
+	font-weight: 650;
+}
+
+.ppai-hl__data > summary:focus-visible {
+	border-radius: 4px;
+	outline: 2px solid var(--ppai-gold-bright);
+	outline-offset: 3px;
+}
+
+.ppai-hl__data-note {
+	color: var(--ppai-ink-muted) !important;
+	margin: 1rem 0 1.25rem !important;
+	max-width: 62ch;
+}
+
+.ppai-hl__back {
+	margin-top: 2.5rem !important;
+}
+
 /* Schema panel -------------------------------------------------------- */
 
 .ppai-schema {
@@ -543,7 +686,16 @@ function editor_url(): string {
 }
 
 /**
- * The welcome strip: where you are, and three things worth clicking.
+ * Link to the headless page.
+ */
+function headless_url(): string {
+	$page = get_page_by_path( HEADLESS_PAGE_SLUG );
+
+	return $page instanceof \WP_Post ? (string) get_permalink( $page ) : home_url( '/' . HEADLESS_PAGE_SLUG . '/' );
+}
+
+/**
+ * The welcome strip: where you are, and four things worth clicking.
  */
 function welcome_strip(): string {
 	$buttons = array(
@@ -561,13 +713,19 @@ function welcome_strip(): string {
 			'<button class="ppai-btn ppai-btn--ghost" type="button" data-ppai-open-schema aria-controls="ppai-schema">%s</button>',
 			esc_html__( 'See the schema it writes', 'answer-ready-faq' )
 		),
+		sprintf(
+			'<a class="ppai-btn ppai-btn--ghost" href="%s">%s</a>',
+			esc_url( headless_url() ),
+			esc_html__( 'See it headless', 'answer-ready-faq' )
+		),
 	);
 
 	return sprintf(
-		'<aside class="ppai-welcome"><p class="ppai-welcome__eyebrow">%s</p><p class="ppai-welcome__lede">%s</p><div class="ppai-welcome__actions">%s</div></aside>',
+		'<aside class="ppai-welcome"><p class="ppai-welcome__eyebrow">%s</p><p class="ppai-welcome__lede">%s</p><div class="ppai-welcome__actions">%s</div><p class="ppai-welcome__note">%s</p></aside>',
 		esc_html__( 'Live demo', 'answer-ready-faq' ),
 		esc_html__( "You're inside a real WordPress site, running in your browser. Nothing to install.", 'answer-ready-faq' ),
-		implode( '', $buttons )
+		implode( '', $buttons ),
+		esc_html__( 'Here WordPress only stores the answers. A separate React front end asks for them and draws the page itself.', 'answer-ready-faq' )
 	);
 }
 
@@ -607,6 +765,268 @@ function frame_demo_content( string $content ): string {
 	return welcome_strip() . $content . schema_panel();
 }
 add_filter( 'the_content', __NAMESPACE__ . '\frame_demo_content', 20 );
+
+/* -------------------------------------------------------------------------
+ * "See it headless" — the same answers, drawn by a React front end
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Is this the headless page?
+ */
+function is_headless_page(): bool {
+	return is_page( HEADLESS_PAGE_SLUG ) && is_main_query();
+}
+
+/**
+ * Put the mount point and the explanation on the headless page.
+ *
+ * Note what is *not* here: no FAQ block, no accordion markup, no JSON-LD.
+ * The page ships an empty div. Everything a visitor ends up reading is
+ * fetched from the REST endpoint and drawn by React in the browser, which
+ * is the entire point of the page.
+ *
+ * @param string $content Post content.
+ * @return string
+ */
+function frame_headless_content( string $content ): string {
+	if ( ! is_headless_page() || ! in_the_loop() ) {
+		return $content;
+	}
+
+	$intro = sprintf(
+		'<p class="ppai-hl__lede">%s</p>',
+		esc_html__( 'Here WordPress only stores the answers. A separate React front end asks for them and draws the page itself.', 'answer-ready-faq' )
+	);
+
+	// Rendered before React mounts, and replaced the moment it does. A
+	// visitor on a slow connection sees a sentence rather than a blank box.
+	$mount = sprintf(
+		'<div id="ppai-headless-root" class="ppai-hl"><p class="ppai-hl__status">%s</p></div>',
+		esc_html__( 'Asking WordPress for the answers…', 'answer-ready-faq' )
+	);
+
+	$back = sprintf(
+		'<p class="ppai-hl__back"><a href="%s">%s</a></p>',
+		esc_url( get_permalink( get_page_by_path( DEMO_PAGE_SLUG ) ) ),
+		esc_html__( 'Back to the demo page', 'answer-ready-faq' )
+	);
+
+	return $intro . $content . $mount . $back;
+}
+add_filter( 'the_content', __NAMESPACE__ . '\frame_headless_content', 20 );
+
+/**
+ * Hand the React app its endpoint and load it.
+ *
+ * `wp-element` is WordPress's own bundled React, so the app adds no
+ * dependency and ships no bundle of its own. It is written with
+ * createElement rather than JSX for the same reason: JSX would need a build
+ * step, and a build artifact cannot be read in a pull request the way this
+ * can.
+ */
+function enqueue_headless_app(): void {
+	if ( ! is_page( HEADLESS_PAGE_SLUG ) ) {
+		return;
+	}
+
+	$demo_page = get_page_by_path( DEMO_PAGE_SLUG );
+
+	if ( ! $demo_page instanceof \WP_Post ) {
+		return;
+	}
+
+	wp_register_script( 'ppai-headless', false, array( 'wp-element' ), '1.2.0', true );
+	wp_enqueue_script( 'ppai-headless' );
+
+	wp_add_inline_script(
+		'ppai-headless',
+		'window.ppaiHeadless = ' . wp_json_encode(
+			array(
+				'endpoint' => rest_url( 'answer-ready/v1/faqs/' . $demo_page->ID ),
+				'postId'   => $demo_page->ID,
+			)
+		) . ';',
+		'before'
+	);
+
+	wp_add_inline_script( 'ppai-headless', headless_app_js(), 'after' );
+}
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_headless_app', 20 );
+
+/**
+ * The React app.
+ *
+ * Deliberately plain: fetch once, hold three states (loading, error, ready),
+ * and draw an accordion of its own. The disclosure is a real button with
+ * aria-expanded rather than a <details>, because here the front end owns the
+ * interaction — which is the difference the page is trying to show.
+ */
+function headless_app_js(): string {
+	return <<<'JS'
+( function ( wp, config ) {
+	if ( ! wp || ! wp.element || ! config ) {
+		return;
+	}
+
+	var el = wp.element.createElement;
+	var useState = wp.element.useState;
+	var useEffect = wp.element.useEffect;
+
+	function Answer( props ) {
+		// The endpoint already ran this through the same inline-only kses
+		// allowlist the page renders with, so there is nothing left here to
+		// escape a second time.
+		return el( 'div', {
+			className: 'ppai-hl__answer',
+			id: props.id,
+			role: 'region',
+			'aria-labelledby': props.labelledBy,
+			dangerouslySetInnerHTML: { __html: props.html }
+		} );
+	}
+
+	function Item( props ) {
+		var questionId = 'ppai-hl-q-' + props.index;
+		var answerId = 'ppai-hl-a-' + props.index;
+
+		return el(
+			'div',
+			{ className: 'ppai-hl__item' },
+			el(
+				'button',
+				{
+					type: 'button',
+					className: 'ppai-hl__question',
+					id: questionId,
+					'aria-expanded': props.isOpen ? 'true' : 'false',
+					'aria-controls': answerId,
+					onClick: props.onToggle
+				},
+				el( 'span', { className: 'ppai-hl__marker', 'aria-hidden': 'true' } ),
+				props.faq.question
+			),
+			props.isOpen
+				? el( Answer, { id: answerId, labelledBy: questionId, html: props.faq.answer } )
+				: null
+		);
+	}
+
+	function DataPanel( props ) {
+		return el(
+			'details',
+			{ className: 'ppai-hl__data' },
+			el( 'summary', null, 'Data coming in' ),
+			el(
+				'p',
+				{ className: 'ppai-hl__data-note' },
+				'This is the whole reply, exactly as it arrived. The answers above were drawn from it, and so was the schema — same request, one source.'
+			),
+			el(
+				'pre',
+				{ className: 'ppai-schema__code', tabIndex: 0 },
+				JSON.stringify( props.data, null, 2 )
+			)
+		);
+	}
+
+	function App() {
+		var statePair = useState( { status: 'loading' } );
+		var state = statePair[ 0 ];
+		var setState = statePair[ 1 ];
+
+		var openPair = useState( {} );
+		var open = openPair[ 0 ];
+		var setOpen = openPair[ 1 ];
+
+		useEffect( function () {
+			var cancelled = false;
+
+			window.fetch( config.endpoint, { headers: { Accept: 'application/json' } } )
+				.then( function ( response ) {
+					if ( ! response.ok ) {
+						throw new Error( 'WordPress answered with ' + response.status + '.' );
+					}
+					return response.json();
+				} )
+				.then( function ( data ) {
+					if ( ! cancelled ) {
+						setState( { status: 'ready', data: data } );
+					}
+				} )
+				.catch( function ( error ) {
+					if ( ! cancelled ) {
+						setState( { status: 'error', message: error.message } );
+					}
+				} );
+
+			return function () {
+				cancelled = true;
+			};
+		}, [] );
+
+		if ( 'loading' === state.status ) {
+			return el( 'p', { className: 'ppai-hl__status' }, 'Asking WordPress for the answers…' );
+		}
+
+		if ( 'error' === state.status ) {
+			return el(
+				'p',
+				{ className: 'ppai-hl__status ppai-hl__status--error' },
+				'That request did not come back: ' + state.message
+			);
+		}
+
+		var faqs = state.data.faqs || [];
+
+		if ( ! faqs.length ) {
+			return el( 'p', { className: 'ppai-hl__status' }, 'WordPress has no FAQ answers on that page yet.' );
+		}
+
+		return el(
+			'div',
+			null,
+			el(
+				'p',
+				{ className: 'ppai-hl__count' },
+				'Fetched ' + faqs.length + ' answers from WordPress. None of this page is a WordPress block.'
+			),
+			el(
+				'div',
+				{ className: 'ppai-hl__list' },
+				faqs.map( function ( faq, index ) {
+					return el( Item, {
+						key: index,
+						index: index,
+						faq: faq,
+						isOpen: !! open[ index ],
+						onToggle: function () {
+							setOpen( function ( previous ) {
+								var next = Object.assign( {}, previous );
+								next[ index ] = ! next[ index ];
+								return next;
+							} );
+						}
+					} );
+				} )
+			),
+			el( DataPanel, { data: state.data } )
+		);
+	}
+
+	var root = document.getElementById( 'ppai-headless-root' );
+
+	if ( ! root ) {
+		return;
+	}
+
+	if ( wp.element.createRoot ) {
+		wp.element.createRoot( root ).render( el( App ) );
+	} else {
+		wp.element.render( el( App ), root );
+	}
+} )( window.wp, window.ppaiHeadless );
+JS;
+}
 
 /* -------------------------------------------------------------------------
  * Footer

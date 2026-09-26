@@ -9,6 +9,7 @@
 | 🤖 **AI-search ready** | Auto-generated schema.org FAQPage JSON-LD on every render |
 | 🔒 **Escaped twice** | Editor constraints + server-side `wp_kses()` allowlist |
 | 🎨 **Theme-agnostic** | Inherits any theme's colors and type, dark mode included |
+| 🔌 **Headless-ready** | Read-only REST endpoint serving the same answers *and* the same JSON-LD |
 
 A WordPress block that treats an FAQ as what it really is: **content for two audiences at once** — the human reading the page, and the search engines and AI answer engines deciding whether to surface it.
 
@@ -23,6 +24,8 @@ Built with the standard WordPress toolchain (`@wordpress/scripts`), block API v3
 *A temporary WordPress site spins up in your browser with the plugin installed and a demo FAQ page already published. Nothing to install. ~15s first load.*
 
 The demo page also lets you open the block in the real editor, look at the plugin on the Plugins screen, and expand a panel showing the `FAQPage` JSON-LD **that page is publishing at that moment** — read back out of the rendered HTML, not a copy pasted into a docs example.
+
+There is a second page, **See it headless**, that uses no FAQ block at all: a small React app fetches the REST endpoint below and draws the accordion itself, with a panel showing the raw JSON it received.
 
 ## Why this block exists
 
@@ -47,6 +50,37 @@ This block solves both with one architectural decision: **the block attributes a
 
 **An `emitSchema` escape hatch.** If another block or plugin already emits `FAQPage` schema on the page, editors can toggle this block's JSON-LD off from the inspector — duplicate `FAQPage` graphs on one URL is itself a structured-data error.
 
+## The REST endpoint
+
+```
+GET /wp-json/answer-ready/v1/faqs/<post_id>
+```
+
+Public, read-only, and cacheable. It returns a post's FAQ pairs together with the `FAQPage` graph that post publishes:
+
+```json
+{
+  "postId": 4,
+  "title": "See it working",
+  "url": "https://example.com/faq-demo/",
+  "modified": "2026-09-26T17:29:00+00:00",
+  "count": 5,
+  "faqs": [ { "question": "…", "answer": "…" } ],
+  "schema": { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [ … ] }
+}
+```
+
+**The endpoint is not a second implementation.** It and the block's render callback both call `AnswerReadyFAQ\Data\build_schema()` on the output of the same normaliser, so the JSON a headless client fetches and the JSON-LD a crawler reads on the page are the same graph by construction — not by discipline. `tests/SingleSourceTest.php` fails if anyone gives either path a graph of its own.
+
+Notes on the contract:
+
+- **Public means published.** Drafts, pending and private posts, revisions, password-protected posts and non-public post types all return the same 404, so the endpoint cannot be used to probe for unpublished content.
+- **`answer` arrives pre-sanitised** through the same inline-only `wp_kses()` allowlist the page renders with, so a client can print it without re-sanitising.
+- **`schema` answers are plain text**, per Google's structured-data guidance.
+- **Cached** in a transient keyed by the post's modified time, so an edit invalidates it rather than waiting out a TTL, and sent with `Cache-Control: public, max-age=300, s-maxage=3600`.
+
+See [`examples/headless-nextjs/`](examples/headless-nextjs/) for a Next.js App Router page that consumes it.
+
 ## Accessibility notes
 
 - Disclosure semantics come from native elements; state is announced by the platform.
@@ -65,6 +99,15 @@ npm run lint:css
 npm run plugin-zip
 ```
 
+Tests run on plain PHP — no WordPress install, no database, no `wp-env`:
+
+```bash
+composer install
+composer test
+```
+
+The data layer leans on only `wp_strip_all_tags()` and `wp_kses()`, both stubbed in `tests/bootstrap.php`, which keeps the suite fast enough to run on every save. It covers the normaliser, the schema shape, the escaping contract, and the single-source guarantee above.
+
 Requires WordPress 6.5+ and PHP 8.0+.
 
 ## Structure
@@ -79,6 +122,11 @@ src/faq-block/
   style.scss                Front-end structure-only styles
   editor.scss               Editor-only repeater styles
 build/                      Compiled output (generated; not committed)
+includes/
+  faq-data.php              Normalise, sanitise, build schema — the one source
+  rest.php                  GET /answer-ready/v1/faqs/<post_id>
+tests/                      PHPUnit, no WordPress install required
+examples/headless-nextjs/   Next.js App Router page consuming the endpoint
 blueprint.json              WordPress Playground demo definition
 demo/mu-plugins/
   playplayai-demo-skin.php  Demo-only presentation layer (see below)
@@ -100,9 +148,9 @@ npm run check:blueprint   # fail if blueprint.json is out of date
 
 ## Roadmap
 
-- Unit tests for the render callback (WP_Mock) and E2E coverage for the repeater (Playwright)
+- E2E coverage for the repeater (Playwright)
 - Optional "single item open at a time" progressive enhancement via a small `viewScript` using the `name` attribute on `<details>`
-- `HowTo` sibling block sharing the same architecture
+- `HowTo` sibling block sharing the same architecture and the same endpoint
 
 ## Author
 
